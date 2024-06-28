@@ -21,6 +21,8 @@ type Data = {
    total_pages: number
 }
 type AppT = {
+   release_year: string,
+   genre: string,
    page: number
    title: string
    status: string
@@ -29,6 +31,8 @@ type AppT = {
 }
 
 const initialState: AppT = {
+   release_year: '0',
+   genre: '0',
    page: 1,
    title: '',
    status: 'pending',
@@ -46,6 +50,12 @@ export const appSlice = createSlice({
       setPage: (state: AppT, action: PayloadAction<number>) => {
          state.page = action.payload
       },
+      setRealiseYear: (state: AppT, action: PayloadAction<string>) => {
+         state.release_year = action.payload
+      },
+      setGenre: (state: AppT, action: PayloadAction<string>) => {
+         state.genre = action.payload
+      }
    },
    extraReducers: (builder: ActionReducerMapBuilder<AppT>) => {
       builder.addCase(getFilmBySearch.pending, (state: AppT) => {
@@ -61,7 +71,7 @@ export const appSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setTitle, setPage } = appSlice.actions
+export const { setTitle, setPage, setRealiseYear, setGenre } = appSlice.actions
 
 // export const selectApp = (state: RootState) => state.app.value
 
