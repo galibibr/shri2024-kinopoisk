@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Film } from "./pages/film/component";
+import { FilmPage } from "./pages/filmpage/component";
 import { Home } from "./pages/home/component";
 import { Layout } from "./components/layout/component";
 
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
       },
       {
         path: ":id",
-        element: <Film />,
+        element: <FilmPage />,
       },
     ],
   },
