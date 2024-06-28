@@ -13,13 +13,15 @@ export const Films = () => {
   const page: number = useAppSelector((state) => state.app.page);
   const status: string = useAppSelector((state) => state.app.status);
   const release_year: string = useAppSelector((state) => state.app.release_year);
-  const genre: string | 0 = useAppSelector((state) => state.app.genre);
+  const genre: string = useAppSelector((state) => state.app.genre);
 
   const query =
-    (title && `title=${title}`) +
-    `${title && "&"}page=${page}` +
-    `${release_year !== "0" && "&"}release_year=${release_year}` +
-    `${genre !== "0" && "&"}genre=${genre}`;
+    (title ? `title=${title}` : "") +
+    (page ? `${title ? "&" : ""}page=${page}` : "") +
+    (release_year !== "0" ? `&release_year=${release_year}` : "") +
+    (genre !== "0" ? `&genre=${genre}` : "");
+  console.log(query);
+
   useEffect(() => {
     dispatch(getFilmBySearch(query));
   }, [query]);
@@ -27,7 +29,7 @@ export const Films = () => {
   if (status === "fulfilled" && films.length === 0) {
     return <div>Film not found</div>;
   }
-  films.length && console.log(films.map((film: FilmT) => film.release_year));
+  //   films.length && console.log(films.map((film: FilmT) => film.release_year));
 
   return (
     <div>
