@@ -1,4 +1,5 @@
 import { Films } from "../../components/films/component";
+import { Search } from "../../components/search/component";
 
 export const Home = () => {
   return (
@@ -16,7 +17,10 @@ export const Home = () => {
           <option value="year">year 2</option>
         </select>
       </nav>
-      <Films />
+      <div>
+        <Search />
+        <Films />
+      </div>
     </div>
   );
 };

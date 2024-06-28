@@ -1,29 +1,34 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { getFilmBySearch, setPage, setTitle } from "../../features/appSlice";
+import { getFilmBySearch, setPage } from "../../features/appSlice";
 import { Pagination } from "../pagination/component";
 import { Film } from "../film/component";
+import { FilmT } from "../../types/types";
 
 export const Films = () => {
   const dispatch = useAppDispatch();
-  const { search_result, total_pages } = useAppSelector((state) => state.app.data);
-  const title = useAppSelector((state) => state.app.title);
-  const page = useAppSelector((state) => state.app.page);
-  const status = useAppSelector((state) => state.app.status);
-
-  const query = (title && `title=${title}`) + `${title && "&"}page=${page}`;
+  const { search_result: films, total_pages }: { search_result: FilmT[]; total_pages: number } =
+    useAppSelector((state) => state.app.data);
+  const title: string = useAppSelector((state) => state.app.title);
+  const page: number = useAppSelector((state) => state.app.page);
+  const status: string = useAppSelector((state) => state.app.status);
 
   useEffect(() => {
-    dispatch(getFilmBySearch(query));
+    const query = (title && `title=${title}`) + `${title && "&"}page=${page}`;
+    setTimeout(() => {
+      dispatch(getFilmBySearch(query));
+    }, 1000);
   }, [title, page]);
+
+  if (status === "fulfilled" && films.length === 0) {
+    return <div>Film not found</div>;
+  }
 
   return (
     <div>
-      <input type="search" value={title} onChange={(e) => dispatch(setTitle(e.target.value))} />
-
       {status === "fulfilled" ? (
         <div>
-          {search_result.map((film) => (
+          {films.map((film: FilmT) => (
             <Film key={film.id} film={film} />
           ))}
           <Pagination

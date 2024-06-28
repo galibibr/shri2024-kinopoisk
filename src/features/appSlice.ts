@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import type { ActionReducerMapBuilder, PayloadAction } from '@reduxjs/toolkit'
+import { FilmT } from '../types/types';
 // import { RootState } from '../store/store';
 
 export const getFilmBySearch = createAsyncThunk(
@@ -15,15 +16,19 @@ export const getFilmBySearch = createAsyncThunk(
    }
 )
 
+type Data = {
+   search_result: FilmT[] | []
+   total_pages: number
+}
+type AppT = {
+   page: number
+   title: string
+   status: string
+   error: string | null
+   data: Data
+}
 
-
-const initialState: {
-   page: number,
-   title: string,
-   status: string,
-   error: string | null,
-   data: { search_result: [], total_pages: number }
-} = {
+const initialState: AppT = {
    page: 1,
    title: '',
    status: 'pending',
@@ -35,23 +40,23 @@ export const appSlice = createSlice({
    name: 'app',
    initialState,
    reducers: {
-      setTitle: (state, action: PayloadAction<string>) => {
+      setTitle: (state: AppT, action: PayloadAction<string>) => {
          state.title = action.payload
       },
-      setPage: (state, action: PayloadAction<number>) => {
+      setPage: (state: AppT, action: PayloadAction<number>) => {
          state.page = action.payload
       },
    },
-   extraReducers: (builder) => {
-      builder.addCase(getFilmBySearch.pending, (state) => {
+   extraReducers: (builder: ActionReducerMapBuilder<AppT>) => {
+      builder.addCase(getFilmBySearch.pending, (state: AppT) => {
          state.status = 'pending';
          state.error = null
       })
-      builder.addCase(getFilmBySearch.fulfilled, (state, action) => {
+      builder.addCase(getFilmBySearch.fulfilled, (state: AppT, action) => {
          state.status = 'fulfilled'
          state.data = action.payload
       })
-      builder.addCase(getFilmBySearch.rejected, (state) => { state.status = 'rejected' })
+      builder.addCase(getFilmBySearch.rejected, (state: AppT) => { state.status = 'rejected' })
    }
 })
 
