@@ -1,11 +1,15 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "../header/component";
+import classNames from "classnames";
+import styles from "./styles.module.css";
 
 export const Layout = () => {
   return (
-    <div>
+    <div className={classNames(styles.layout)}>
       <Header />
-      <Outlet />
+      <main className={classNames(styles.outlet)}>
+        <Outlet />
+      </main>
     </div>
   );
 };

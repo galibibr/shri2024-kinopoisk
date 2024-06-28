@@ -1,0 +1,33 @@
+.label {
+  background-color: #fff;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input {
+  border-radius: 8px;
+  padding: 12px;
+  padding-left: 36px;
+  border: 1px solid white;
+  min-width: 400px;
+  outline: none;
+  color: #1b1f23;
+}
+.search_icon {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  left: 12px;
+  cursor: text;
+}
+
+.input:hover {
+  border: 1px solid #ced2d6;
+}
+.input:focus {
+  border: 1px solid #ff5500;
+}
+.input::placeholder {
+  color: #999fa6;
+}

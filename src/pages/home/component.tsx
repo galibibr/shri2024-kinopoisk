@@ -1,17 +1,19 @@
+import classNames from "classnames";
 import { Films } from "../../components/films/component";
 import { Genres } from "../../components/genres/component";
 import { Search } from "../../components/search/component";
 import { Years } from "../../components/years/component";
+import styles from "./styles.module.css";
 
 export const Home = () => {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 3fr" }}>
-      <nav>
+    <div className={classNames(styles.container)}>
+      <nav className={classNames(styles.side_box)}>
         <h4>Фильтр</h4>
         <Genres />
         <Years />
       </nav>
-      <div>
+      <div className={classNames(styles.main)}>
         <Search />
         <Films />
       </div>
