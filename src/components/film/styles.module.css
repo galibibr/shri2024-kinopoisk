@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+.container {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  display: flex;
+  gap: 24px;
+  font-family: "Roboto", sans-serif;
+  color: #1b1f23;
+}
+.poster {
+  height: 120px;
+  width: 100px;
+  border-radius: 8px;
+}
+.right_box {
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  width: 100%;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 14px;
+  font-weight: 400;
+}
+.title {
+  font-weight: 600;
+  font-size: 20px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 600px);
+  grid-template-rows: 3fr;
+  row-gap: 12px;
+  column-gap: 16px;
+}
+.genre,
+.release_year,
+.description {
+  color: #ababab;
+}
+.genre {
+  grid-column: 1/2;
+}
+.genre_v {
+  grid-column: 2/3;
+}
+.release_year {
+  grid-row: 2/3;
+  grid-column: 1/2;
+}
+.release_year_v {
+  grid-row: 2/3;
+  grid-column: 2/3;
+}
+.description {
+  grid-row: 3/4;
+  grid-column: 1/2;
+}
+.description_v {
+  grid-row: 3/4;
+  grid-column: 2/3;
+}

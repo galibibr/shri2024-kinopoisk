@@ -32,12 +32,14 @@ export const Films = () => {
   //   films.length && console.log(films.map((film: FilmT) => film.release_year));
 
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       {status === "fulfilled" ? (
         <div>
-          {films.map((film: FilmT) => (
-            <Film key={film.id} film={film} />
-          ))}
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            {films.map((film: FilmT) => (
+              <Film key={film.id} film={film} />
+            ))}
+          </div>
           <Pagination
             page={page}
             total_pages={total_pages}
