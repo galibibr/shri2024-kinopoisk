@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.title {
+  font-size: 14px;
+}
+.select_box {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #e1e3e6;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.select_box:hover {
+  border-color: #ff5500;
+}
+.options {
+  margin-top: 4px;
+  border-radius: 8px;
+  box-shadow: 0px 10px 22px -4px #1b1f231f;
+  padding: 8px 6px;
+}
+.option {
+  color: #000;
+  cursor: pointer;
+  padding: 12px;
+}
+.icon {
+  width: 18px;
+  height: 18px;
+}
+.active {
+  transform: rotate(180deg);
+}

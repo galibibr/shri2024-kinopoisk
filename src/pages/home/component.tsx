@@ -10,8 +10,10 @@ export const Home = () => {
     <div className={classNames(styles.container)}>
       <nav className={classNames(styles.side_box)}>
         <h4>Фильтр</h4>
-        <Genres />
-        <Years />
+        <div className={classNames(styles.filter_box)}>
+          <Genres />
+          <Years />
+        </div>
       </nav>
       <div className={classNames(styles.main)}>
         <Search />
