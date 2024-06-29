@@ -9,6 +9,27 @@ export const getFilmBySearch = createAsyncThunk(
       try {
          const response = await fetch(`http://localhost:3030/api/v1/search?${q}`);
          const result = await response.json();
+         if (result.search_result) {
+            const newRatings = result.search_result.map((film: FilmT) => {
+               return { id: film.id, rating: 0 };
+            });
+            type Rating = {
+               id: string;
+               rating: number;
+            };
+            if (localStorage.getItem("ratings")) {
+               const ratings: Rating[] = JSON.parse(localStorage.getItem("ratings") || "[]");
+               newRatings.forEach((film: Rating) => {
+                  const idRat = ratings.map((e: Rating) => e["id"]);
+                  if (!idRat.includes(film["id"])) {
+                     ratings.push(film);
+                  }
+               });
+               localStorage.setItem("ratings", JSON.stringify(ratings));
+            } else {
+               localStorage.setItem("ratings", JSON.stringify(newRatings));
+            }
+         }
          return result
       } catch (error) {
          console.error(error)

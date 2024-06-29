@@ -10,6 +10,12 @@ export const Film: ({ film, user }: { film: FilmT; user: boolean }) => JSX.Eleme
   film: FilmT;
   user: boolean;
 }) => {
+  type Rating = { id: string; rating: number };
+  const ratings: Rating[] = JSON.parse(localStorage.getItem("ratings") || "[]");
+  const ratingObj: Rating | undefined = ratings.find(
+    (e: { id: string; rating: number }) => e.id === film.id
+  );
+
   return (
     <div className={classNames(styles.container)}>
       <img className={classNames(styles.poster)} src={film.poster} alt={film.title} />
@@ -25,7 +31,7 @@ export const Film: ({ film, user }: { film: FilmT; user: boolean }) => JSX.Eleme
             <p className={classNames(styles.description_v)}>{film.description}</p>
           </div>
         </div>
-        <Rating rating={user ? film.rating : "0"} />
+        {user && <Rating filmId={film.id} rating={ratingObj?.rating} />}
       </div>
     </div>
   );
