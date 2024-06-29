@@ -22,6 +22,7 @@ type Data = {
 }
 type AppT = {
    release_year: string,
+   loginModal: boolean
    genre: string,
    page: number
    title: string
@@ -32,6 +33,7 @@ type AppT = {
 
 const initialState: AppT = {
    release_year: '0',
+   loginModal: false,
    genre: '0',
    page: 1,
    title: '',
@@ -55,6 +57,9 @@ export const appSlice = createSlice({
       },
       setGenre: (state: AppT, action: PayloadAction<string>) => {
          state.genre = action.payload
+      },
+      setLoginModal: (state: AppT, action: PayloadAction<boolean>) => {
+         state.loginModal = action.payload
       }
    },
    extraReducers: (builder: ActionReducerMapBuilder<AppT>) => {
@@ -71,7 +76,7 @@ export const appSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setTitle, setPage, setRealiseYear, setGenre } = appSlice.actions
+export const { setTitle, setLoginModal, setPage, setRealiseYear, setGenre } = appSlice.actions
 
 // export const selectApp = (state: RootState) => state.app.value
 

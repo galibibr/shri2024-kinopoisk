@@ -11,6 +11,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+        errorElement: <h1>Server dosn't response!</h1>,
       },
       {
         path: ":id",

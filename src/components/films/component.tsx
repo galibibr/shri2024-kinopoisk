@@ -20,7 +20,6 @@ export const Films = () => {
     (page ? `${title ? "&" : ""}page=${page}` : "") +
     (release_year !== "0" ? `&release_year=${release_year}` : "") +
     (genre !== "0" ? `&genre=${genre}` : "");
-  console.log(query);
 
   useEffect(() => {
     dispatch(getFilmBySearch(query));
@@ -29,6 +28,10 @@ export const Films = () => {
   if (status === "fulfilled" && films.length === 0) {
     return <div>Film not found</div>;
   }
+  if (status === "rejected" && films.length === 0) {
+    return <div>Server dosn't response</div>;
+  }
+
   //   films.length && console.log(films.map((film: FilmT) => film.release_year));
 
   return (
