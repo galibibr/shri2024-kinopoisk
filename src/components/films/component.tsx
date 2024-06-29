@@ -11,13 +11,14 @@ export const Films = () => {
     useAppSelector((state) => state.app.data);
   const title: string = useAppSelector((state) => state.app.title);
   const page: number = useAppSelector((state) => state.app.page);
-  const status: string = useAppSelector((state) => state.app.status);
+  const status: string | null = useAppSelector((state) => state.app.status);
   const release_year: string = useAppSelector((state) => state.app.release_year);
   const genre: string = useAppSelector((state) => state.app.genre);
+  const user = useAppSelector((state) => state.app.user);
 
   const query =
     (title ? `title=${title}` : "") +
-    (page ? `${title ? "&" : ""}page=${page}` : "") +
+    (page > 1 ? `${title ? "&" : ""}page=${page}` : "") +
     (release_year !== "0" ? `&release_year=${release_year}` : "") +
     (genre !== "0" ? `&genre=${genre}` : "");
 
@@ -32,15 +33,13 @@ export const Films = () => {
     return <div>Server dosn't response</div>;
   }
 
-  //   films.length && console.log(films.map((film: FilmT) => film.release_year));
-
   return (
     <div style={{ width: "100%" }}>
       {status === "fulfilled" ? (
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             {films.map((film: FilmT) => (
-              <Film key={film.id} film={film} />
+              <Film key={film.id} film={film} user={user} />
             ))}
           </div>
           <Pagination

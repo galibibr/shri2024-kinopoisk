@@ -15,6 +15,27 @@ export const getFilmBySearch = createAsyncThunk(
       }
    }
 )
+export const login = createAsyncThunk(
+   'user/login',
+   async (data: { username: string, password: string }) => {
+      try {
+         const response = await fetch(`http://localhost:3030/api/v1/login`, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+         });
+         const result = await response.json();
+         if (result.token) {
+            localStorage.setItem('token', result.token)
+         }
+         return result
+      } catch (error) {
+         console.error(error)
+      }
+   }
+)
 
 type Data = {
    search_result: FilmT[] | []
@@ -26,9 +47,13 @@ type AppT = {
    genre: string,
    page: number
    title: string
-   status: string
+   status: string | null
+   loginStatus: string | null
    error: string | null
    data: Data
+   username: string
+   password: string
+   user: boolean
 }
 
 const initialState: AppT = {
@@ -37,9 +62,13 @@ const initialState: AppT = {
    genre: '0',
    page: 1,
    title: '',
-   status: 'pending',
+   status: null,
+   loginStatus: null,
    error: null,
-   data: { search_result: [], total_pages: 0 }
+   data: { search_result: [], total_pages: 0 },
+   username: '',
+   password: '',
+   user: localStorage.getItem("token") ? true : false
 }
 
 export const appSlice = createSlice({
@@ -60,6 +89,18 @@ export const appSlice = createSlice({
       },
       setLoginModal: (state: AppT, action: PayloadAction<boolean>) => {
          state.loginModal = action.payload
+      },
+      setUsername: (state: AppT, action: PayloadAction<string>) => {
+         state.username = action.payload
+      },
+      setPassword: (state: AppT, action: PayloadAction<string>) => {
+         state.password = action.payload
+      },
+      setLoginStatus: (state: AppT, action: PayloadAction<string | null>) => {
+         state.loginStatus = action.payload
+      },
+      setUser: (state: AppT, action: PayloadAction<boolean>) => {
+         state.user = action.payload
       }
    },
    extraReducers: (builder: ActionReducerMapBuilder<AppT>) => {
@@ -72,11 +113,26 @@ export const appSlice = createSlice({
          state.data = action.payload
       })
       builder.addCase(getFilmBySearch.rejected, (state: AppT) => { state.status = 'rejected' })
+      // Login
+      builder.addCase(login.pending, (state: AppT) => {
+         state.loginStatus = 'pending';
+         state.error = null
+      })
+      builder.addCase(login.fulfilled, (state: AppT, action) => {
+         state.loginStatus = 'fulfilled'
+         if (action.payload.token) {
+            state.user = true
+         }
+      })
+      builder.addCase(login.rejected, (state: AppT) => {
+         state.loginStatus = 'rejected'
+         state.user = false
+      })
    }
 })
 
 // Action creators are generated for each case reducer function
-export const { setTitle, setLoginModal, setPage, setRealiseYear, setGenre } = appSlice.actions
+export const { setTitle, setUser, setLoginStatus, setUsername, setPassword, setLoginModal, setPage, setRealiseYear, setGenre } = appSlice.actions
 
 // export const selectApp = (state: RootState) => state.app.value
 

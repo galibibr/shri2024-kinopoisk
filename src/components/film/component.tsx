@@ -3,7 +3,13 @@ import type { FilmT } from "../../types/types";
 import styles from "./styles.module.css";
 import { Rating } from "../rating/component";
 
-export const Film: ({ film }: { film: FilmT }) => JSX.Element = ({ film }: { film: FilmT }) => {
+export const Film: ({ film, user }: { film: FilmT; user: boolean }) => JSX.Element = ({
+  film,
+  user,
+}: {
+  film: FilmT;
+  user: boolean;
+}) => {
   return (
     <div className={classNames(styles.container)}>
       <img className={classNames(styles.poster)} src={film.poster} alt={film.title} />
@@ -19,7 +25,7 @@ export const Film: ({ film }: { film: FilmT }) => JSX.Element = ({ film }: { fil
             <p className={classNames(styles.description_v)}>{film.description}</p>
           </div>
         </div>
-        <Rating rating={film.rating} />
+        <Rating rating={user ? film.rating : "0"} />
       </div>
     </div>
   );
