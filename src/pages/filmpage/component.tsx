@@ -59,7 +59,7 @@ export const FilmPage = () => {
           {/* Actors */}
           <p style={{ fontSize: "24px", fontWeight: "600" }}>Актеры</p>
           <div>
-            <Actors film={film} />
+            <Actors actors={film.actors} />
           </div>
         </div>
       ) : (

@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.actor_img {
+  width: 160px;
+  height: 226px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.actor_name {
+  font-size: 14px;
+}

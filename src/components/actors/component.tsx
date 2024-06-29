@@ -1,11 +1,17 @@
-import { FullMovieInfo } from "../../types/types";
+import classNames from "classnames";
+import { Actor } from "../actor/component";
 import styles from "./styles.module.css";
 
-export const Actors = ({ film }: { film: FullMovieInfo }) => {
+interface ActorT {
+  name: string;
+  photo: string; // base64 img
+}
+
+export const Actors = ({ actors }: { actors: ActorT[] }) => {
   return (
-    <div>
-      {film?.actors.map((actor) => (
-        <p key={actor.name}>{actor.name}</p>
+    <div className={classNames(styles.container)}>
+      {actors?.map((actor) => (
+        <Actor key={actor.name} actor={actor} />
       ))}
     </div>
   );
