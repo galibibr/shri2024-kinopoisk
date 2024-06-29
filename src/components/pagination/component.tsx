@@ -1,3 +1,8 @@
+import classNames from "classnames";
+import styles from "./styles.module.css";
+import arrowNext from "../../icons/arrow-right.png";
+import arrowPrev from "../../icons/arrow-left.png";
+
 export const Pagination = ({
   page,
   total_pages,
@@ -10,13 +15,23 @@ export const Pagination = ({
   next: () => void;
 }) => {
   return (
-    <div>
-      <button onClick={previous} disabled={page === 1}>
-        -
+    <div className={classNames(styles.container)}>
+      <button
+        className={classNames(styles.btn, {
+          [styles.disabled]: page === 1,
+        })}
+        onClick={previous}
+        disabled={page === 1}>
+        <img className={classNames(styles.arrow)} src={arrowPrev} alt="arrow left" />
       </button>
       {page}
-      <button onClick={next} disabled={page === total_pages}>
-        +
+      <button
+        className={classNames(styles.btn, {
+          [styles.disabled]: page === total_pages,
+        })}
+        onClick={next}
+        disabled={page === total_pages}>
+        <img className={classNames(styles.arrow)} src={arrowNext} alt="arrow right" />
       </button>
     </div>
   );
