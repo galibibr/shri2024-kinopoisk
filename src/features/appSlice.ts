@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { ActionReducerMapBuilder, PayloadAction } from '@reduxjs/toolkit'
-import { FilmT } from '../types/types';
+import { FilmT, FullMovieInfo } from '../types/types';
 // import { RootState } from '../store/store';
 
 export const getFilmBySearch = createAsyncThunk(
@@ -9,7 +9,7 @@ export const getFilmBySearch = createAsyncThunk(
       try {
          const response = await fetch(`http://localhost:3030/api/v1/search?${q}`);
          const result = await response.json();
-         if (result.search_result) {
+         if (result.search_result && localStorage.getItem("token")) {
             const newRatings = result.search_result.map((film: FilmT) => {
                return { id: film.id, rating: 0 };
             });
@@ -57,6 +57,18 @@ export const login = createAsyncThunk(
       }
    }
 )
+export const getFilmById = createAsyncThunk(
+   'film/getFilmById',
+   async (id: string) => {
+      try {
+         const response = await fetch(`http://localhost:3030/api/v1/movie/${id}`);
+         const result = await response.json();
+         return result
+      } catch (error) {
+         console.error(error)
+      }
+   }
+)
 
 type Data = {
    search_result: FilmT[] | []
@@ -69,12 +81,14 @@ type AppT = {
    page: number
    title: string
    status: string | null
+   statusGetById: string | null
    loginStatus: string | null
    error: string | null
    data: Data
    username: string
    password: string
    user: boolean
+   film: FullMovieInfo | null
 }
 
 const initialState: AppT = {
@@ -84,12 +98,14 @@ const initialState: AppT = {
    page: 1,
    title: '',
    status: null,
+   statusGetById: null,
    loginStatus: null,
    error: null,
    data: { search_result: [], total_pages: 0 },
    username: '',
    password: '',
-   user: localStorage.getItem("token") ? true : false
+   user: localStorage.getItem("token") ? true : false,
+   film: null
 }
 
 export const appSlice = createSlice({
@@ -133,7 +149,17 @@ export const appSlice = createSlice({
          state.status = 'fulfilled'
          state.data = action.payload
       })
-      builder.addCase(getFilmBySearch.rejected, (state: AppT) => { state.status = 'rejected' })
+      builder.addCase(getFilmById.rejected, (state: AppT) => { state.status = 'rejected' })
+      // Get by ID
+      builder.addCase(getFilmById.pending, (state: AppT) => {
+         state.statusGetById = 'pending';
+         state.error = null
+      })
+      builder.addCase(getFilmById.fulfilled, (state: AppT, action) => {
+         state.statusGetById = 'fulfilled'
+         state.film = action.payload
+      })
+      builder.addCase(getFilmBySearch.rejected, (state: AppT) => { state.statusGetById = 'rejected' })
       // Login
       builder.addCase(login.pending, (state: AppT) => {
          state.loginStatus = 'pending';

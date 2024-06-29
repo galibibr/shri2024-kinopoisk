@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { getFilmBySearch, setLoginModal, setUser } from "../../features/appSlice";
 import { LoginModal } from "../login-modal/component";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   const loginModal = useAppSelector((state) => state.app.loginModal);
@@ -22,12 +23,15 @@ export const Header = () => {
 
   const handleLogout = () => {
     dispatch(setUser(false));
+    localStorage.removeItem("ratings");
     localStorage.removeItem("token");
   };
 
   return (
     <header className={classNames(styles.header)}>
-      <p className={classNames(styles.logo)}>Фильмопоиск</p>
+      <Link to="/" className={classNames(styles.logo)}>
+        Фильмопоиск
+      </Link>
       <div className={classNames(styles.auth_box)}>
         {token ? (
           <>

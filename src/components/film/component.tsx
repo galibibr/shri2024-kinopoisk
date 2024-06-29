@@ -2,6 +2,7 @@ import classNames from "classnames";
 import type { FilmT } from "../../types/types";
 import styles from "./styles.module.css";
 import { Rating } from "../rating/component";
+import { Link } from "react-router-dom";
 
 export const Film: ({ film, user }: { film: FilmT; user: boolean }) => JSX.Element = ({
   film,
@@ -18,10 +19,14 @@ export const Film: ({ film, user }: { film: FilmT; user: boolean }) => JSX.Eleme
 
   return (
     <div className={classNames(styles.container)}>
-      <img className={classNames(styles.poster)} src={film.poster} alt={film.title} />
+      <Link to={`${film.id}`}>
+        <img className={classNames(styles.poster)} src={film.poster} alt={film.title} />
+      </Link>
       <div className={classNames(styles.right_box)}>
         <div className={classNames(styles.main)}>
-          <p className={classNames(styles.title)}>{film.title}</p>
+          <Link to={`${film.id}`}>
+            <p className={classNames(styles.title)}>{film.title}</p>
+          </Link>
           <div className={classNames(styles.grid)}>
             <p className={classNames(styles.genre)}>Жанр</p>
             <p className={classNames(styles.genre_v)}>{film.genre}</p>
