@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { getFilmBySearch } from "../../features/appSlice";
 import { Pagination } from "../pagination/component";
 import { Film } from "../film/component";
 import { FilmT } from "../../types/types";
 import { Loading } from "../loading/component";
 import { useSearchParams } from "react-router-dom";
+import { getFilmBySearch } from "../../api/fetch";
 
 export const Films = () => {
   const dispatch = useAppDispatch();
@@ -33,10 +33,38 @@ export const Films = () => {
   }, [query]);
 
   if (status === "fulfilled" && films.length === 0) {
-    return <div>Film not found</div>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+          width: "100%",
+          fontSize: "24px",
+          fontWeight: "bold",
+          height: "100%",
+        }}>
+        Film not found
+      </div>
+    );
   }
   if (status === "rejected" && films.length === 0) {
-    return <div>Server dosn't response</div>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+          width: "100%",
+          fontSize: "24px",
+          fontWeight: "bold",
+          height: "100%",
+        }}>
+        Server dosn't response
+      </div>
+    );
   }
 
   return (

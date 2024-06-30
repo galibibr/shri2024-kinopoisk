@@ -3,7 +3,7 @@ import styles from "./styles.module.css";
 import { TiStarFullOutline } from "react-icons/ti";
 import { useState } from "react";
 import { useAppDispatch } from "../../hooks/hooks";
-import { getFilmById, rateMovie } from "../../features/appSlice";
+import { getFilmById, rateMovie } from "../../api/fetch";
 
 export const Rating = ({ filmId, rating = 0 }: { filmId: string; rating?: number }) => {
   const dispatch = useAppDispatch();

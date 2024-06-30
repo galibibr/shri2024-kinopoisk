@@ -3,11 +3,11 @@ import styles from "./styles.module.css";
 import classNames from "classnames";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { useEffect } from "react";
-import { getFilmById } from "../../features/appSlice";
 import { FullMovieInfo } from "../../types/types";
 import { Rating } from "../../components/rating/component";
 import { Actors } from "../../components/actors/component";
 import { Loading } from "../../components/loading/component";
+import { getFilmById } from "../../api/fetch";
 
 export const FilmPage = () => {
   const dispatch = useAppDispatch();
@@ -64,7 +64,15 @@ export const FilmPage = () => {
           </div>
         </div>
       ) : (
-        <div>Film not found</div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}>
+          Film not found
+        </div>
       )}
     </>
   );

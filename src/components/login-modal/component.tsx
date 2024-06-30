@@ -2,8 +2,9 @@ import { createPortal } from "react-dom";
 import styles from "./styles.module.css";
 import classNames from "classnames";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { login, setLoginModal, setPassword, setUser, setUsername } from "../../features/appSlice";
+import { setLoginModal, setPassword, setUser, setUsername } from "../../features/appSlice";
 import close from "../../icons/close.png";
+import { login } from "../../api/fetch";
 
 export const LoginModal = () => {
   const dispatch = useAppDispatch();
@@ -30,8 +31,9 @@ export const LoginModal = () => {
     dispatch(login(data)).then((res) => {
       if (res.payload.token) {
         dispatch(setUser(true));
+      } else {
+        alert("Please try again");
       }
-
       onClose();
     });
   };

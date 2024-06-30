@@ -2,10 +2,11 @@ import classNames from "classnames";
 import styles from "./styles.module.css";
 import userIcon from "../../icons/person.png";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { getFilmBySearch, setLoginModal, setUser } from "../../features/appSlice";
+import { setLoginModal, setUser } from "../../features/appSlice";
 import { LoginModal } from "../login-modal/component";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { getFilmBySearch } from "../../api/fetch";
 
 export const Header = () => {
   const loginModal = useAppSelector((state) => state.app.loginModal);
