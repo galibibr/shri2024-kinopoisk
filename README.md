@@ -1,7 +1,14 @@
 # Gettign Started
 
 Начните с клонирования этого репозитория на локальном компьютере:
-`$ git clone ///`
+
+HTTPS:
+
+`$ git clone https://github.com/galibibr/solution-spa-and-next.git`
+
+SSH:
+
+`$ git clone git@github.com:galibibr/solution-spa-and-next.git`
 
 Чтобы установить и настроить библиотеку, запустите:
 
