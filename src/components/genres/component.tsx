@@ -23,7 +23,7 @@ export const Genres = () => {
     war: "Военный",
   };
 
-  const [genre, setGenreS] = useState<string>("Выберите год");
+  const [genre, setGenreS] = useState<string>("Выберите жанр");
   const [genreSelect, setGenreSelect] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
@@ -37,7 +37,11 @@ export const Genres = () => {
     <div className={classNames(styles.container)}>
       <p className={classNames(styles.title)}>Жанр</p>
 
-      <div onClick={() => setGenreSelect(!genreSelect)} className={classNames(styles.select_box)}>
+      <div
+        onClick={() => setGenreSelect(!genreSelect)}
+        className={classNames(styles.select_box, {
+          [styles.select_default]: genre === "Выберите жанр",
+        })}>
         <label>{genre}</label>
         <img
           className={classNames(styles.icon, { [styles.active]: genreSelect })}

@@ -10,8 +10,8 @@ interface ActorT {
 export const Actors = ({ actors }: { actors: ActorT[] }) => {
   return (
     <div className={classNames(styles.container)}>
-      {actors?.map((actor) => (
-        <Actor key={actor.name} actor={actor} />
+      {actors?.map((actor, index) => (
+        <Actor key={index} actor={actor} />
       ))}
     </div>
   );

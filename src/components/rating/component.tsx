@@ -2,8 +2,11 @@ import classNames from "classnames";
 import styles from "./styles.module.css";
 import { TiStarFullOutline } from "react-icons/ti";
 import { useState } from "react";
+import { useAppDispatch } from "../../hooks/hooks";
+import { getFilmById, rateMovie } from "../../features/appSlice";
 
 export const Rating = ({ filmId, rating = 0 }: { filmId: string; rating?: number }) => {
+  const dispatch = useAppDispatch();
   const [index, setIndex] = useState(rating);
 
   type Rating = { id: string; rating: number };
@@ -16,6 +19,8 @@ export const Rating = ({ filmId, rating = 0 }: { filmId: string; rating?: number
       } else return e;
     });
     localStorage.setItem("ratings", JSON.stringify(newRatings));
+    dispatch(rateMovie({ movieId: filmId, user_rate: el }));
+    dispatch(getFilmById(filmId));
   };
   return (
     <div className={classNames(styles.container)}>

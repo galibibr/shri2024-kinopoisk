@@ -7,6 +7,7 @@ import { getFilmById } from "../../features/appSlice";
 import { FullMovieInfo } from "../../types/types";
 import { Rating } from "../../components/rating/component";
 import { Actors } from "../../components/actors/component";
+import { Loading } from "../../components/loading/component";
 
 export const FilmPage = () => {
   const dispatch = useAppDispatch();
@@ -22,7 +23,7 @@ export const FilmPage = () => {
   }, [id]);
 
   if (statusGetById === "pending") {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (

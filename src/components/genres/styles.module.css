@@ -2,6 +2,10 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  font-size: 14px;
+}
+.select_default {
+  color: #ababab;
 }
 .title {
   font-size: 14px;

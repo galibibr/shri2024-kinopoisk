@@ -57,6 +57,28 @@ export const login = createAsyncThunk(
       }
    }
 )
+export const rateMovie = createAsyncThunk(
+   'film/rateMovie',
+   async (data: { movieId: string, user_rate: number }) => {
+      console.log(data)
+
+      try {
+         const response = await fetch(`http://localhost:3030/api/v1/rateMovie`, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json',
+               'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(data)
+         })
+         const result = await response.json();
+         console.log(result)
+         return result
+      } catch (error) {
+         console.error(error)
+      }
+   }
+)
 export const getFilmById = createAsyncThunk(
    'film/getFilmById',
    async (id: string) => {
@@ -174,6 +196,10 @@ export const appSlice = createSlice({
       builder.addCase(login.rejected, (state: AppT) => {
          state.loginStatus = 'rejected'
          state.user = false
+      })
+      // Ratu Movie
+      builder.addCase(rateMovie.fulfilled, () => {
+         console.log('fulfilled');
       })
    }
 })

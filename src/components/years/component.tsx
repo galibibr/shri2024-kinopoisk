@@ -30,7 +30,11 @@ export const Years = () => {
     <div className={classNames(styles.container)}>
       <p className={classNames(styles.title)}>Год выпуска</p>
 
-      <div onClick={() => setYearSelect(!yearSelect)} className={classNames(styles.select_box)}>
+      <div
+        onClick={() => setYearSelect(!yearSelect)}
+        className={classNames(styles.select_box, {
+          [styles.select_default]: year === "Выберите год",
+        })}>
         <label>{year}</label>
         <img
           className={classNames(styles.icon, { [styles.active]: yearSelect })}
