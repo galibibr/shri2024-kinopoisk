@@ -20,6 +20,7 @@ type AppT = {
    password: string
    user: boolean
    film: FullMovieInfo | null
+   isNewRating: number
 }
 
 const initialState: AppT = {
@@ -33,7 +34,8 @@ const initialState: AppT = {
    username: '',
    password: '',
    user: localStorage.getItem("token") ? true : false,
-   film: null
+   film: null,
+   isNewRating: 0
 }
 
 export const appSlice = createSlice({
@@ -54,6 +56,9 @@ export const appSlice = createSlice({
       },
       setUser: (state: AppT, action: PayloadAction<boolean>) => {
          state.user = action.payload
+      },
+      setIsNewRating: (state: AppT, action: PayloadAction<number>) => {
+         state.isNewRating = action.payload
       }
    },
    extraReducers: (builder: ActionReducerMapBuilder<AppT>) => {
@@ -100,7 +105,7 @@ export const appSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setUser, setLoginStatus, setUsername, setPassword, setLoginModal } = appSlice.actions
+export const { setUser, setIsNewRating, setLoginStatus, setUsername, setPassword, setLoginModal } = appSlice.actions
 
 // export const selectApp = (state: RootState) => state.app.value
 

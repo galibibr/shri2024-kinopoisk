@@ -9,6 +9,7 @@ import { getFilmBySearch } from "../../api/fetch";
 
 export const Films = () => {
   const dispatch = useAppDispatch();
+  const isNewRating = useAppSelector((state) => state.app.isNewRating);
   const { search_result: films, total_pages }: { search_result: FilmT[]; total_pages: number } =
     useAppSelector((state) => state.app.data);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -30,7 +31,7 @@ export const Films = () => {
 
   useEffect(() => {
     dispatch(getFilmBySearch(query));
-  }, [query]);
+  }, [query, isNewRating]);
 
   if (status === "fulfilled" && films.length === 0) {
     return (

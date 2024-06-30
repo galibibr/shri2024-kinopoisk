@@ -1,15 +1,34 @@
-import classNames from "classnames";
-import styles from "./styles.module.css";
-import { TiStarFullOutline } from "react-icons/ti";
 import { useState } from "react";
-import { useAppDispatch } from "../../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { getFilmById, rateMovie } from "../../api/fetch";
+import { FaRegStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
+import { setIsNewRating } from "../../features/appSlice";
 
 export const Rating = ({ filmId, rating = 0 }: { filmId: string; rating?: number }) => {
   const dispatch = useAppDispatch();
-  const [index, setIndex] = useState(rating);
+  const isNewRating = useAppSelector((state) => state.app.isNewRating);
+  const [index, setIndex] = useState(0);
 
   type Rating = { id: string; rating: number };
+
+  interface Star {
+    value: number;
+    isHover: boolean;
+    isActive: boolean;
+  }
+  let arr: Star[] = [
+    { value: 1, isHover: false, isActive: false },
+    { value: 2, isHover: false, isActive: false },
+    { value: 3, isHover: false, isActive: false },
+    { value: 4, isHover: false, isActive: false },
+    { value: 5, isHover: false, isActive: false },
+  ];
+  arr = arr.map((e: Star) => {
+    if (e.value <= rating) return { ...e, isActive: true };
+    if (e.value <= index) return { ...e, isHover: true };
+    else return e;
+  });
 
   const handleRating = (el: number) => {
     const ratings: Rating[] = JSON.parse(localStorage.getItem("ratings") || "[]");
@@ -18,31 +37,38 @@ export const Rating = ({ filmId, rating = 0 }: { filmId: string; rating?: number
         return { ...e, rating: el };
       } else return e;
     });
+    dispatch(setIsNewRating(isNewRating + 1));
     localStorage.setItem("ratings", JSON.stringify(newRatings));
     dispatch(rateMovie({ movieId: filmId, user_rate: el }));
     dispatch(getFilmById(filmId));
   };
   return (
-    <div className={classNames(styles.container)}>
-      {[1, 2, 3, 4, 5].map((el) => (
+    <div style={{ display: "flex", alignItems: "start" }}>
+      {arr.map((e: Star) => (
         <div
           onClick={() => {
-            setIndex(el);
-            handleRating(el);
+            handleRating(e.value);
           }}
-          key={el}
-          className={classNames(styles.item_box)}>
-          <TiStarFullOutline
-            className={classNames(styles.star, {
-              [styles.active]: el <= index,
-            })}
-          />
-          <p
-            className={classNames({
-              [styles.active_text]: el <= index,
-            })}>
-            {el}
-          </p>
+          onMouseEnter={() => setIndex(e.value)}
+          onMouseLeave={() => setIndex(0)}
+          key={e.value}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            cursor: "pointer",
+            gap: "8px",
+            paddingLeft: "4px",
+            paddingRight: "4px",
+          }}>
+          {e.isActive ? (
+            <FaStar style={{ color: "#FF5500" }} />
+          ) : e.isHover ? (
+            <FaStar style={{ color: "#ABABAB" }} />
+          ) : (
+            <FaRegStar style={{ color: "#ABABAB" }} />
+          )}
+          <p style={{ color: e.isHover ? "#ABABAB" : "#000000", fontSize: "14px" }}>{e.value}</p>
         </div>
       ))}
     </div>
