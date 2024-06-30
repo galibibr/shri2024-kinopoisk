@@ -5,7 +5,6 @@ import { Pagination } from "../pagination/component";
 import { Film } from "../film/component";
 import { FilmT } from "../../types/types";
 import { Loading } from "../loading/component";
-import { useDebounce } from "../../hooks/use-debounce";
 
 export const Films = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +16,6 @@ export const Films = () => {
   const release_year: string = useAppSelector((state) => state.app.release_year);
   const genre: string = useAppSelector((state) => state.app.genre);
   const user = useAppSelector((state) => state.app.user);
-  const debounceSearch = useDebounce(title);
 
   const query =
     (title ? `title=${title}` : "") +
@@ -27,7 +25,7 @@ export const Films = () => {
 
   useEffect(() => {
     dispatch(getFilmBySearch(query));
-  }, [page, release_year, genre, debounceSearch]);
+  }, [page, release_year, genre, title]);
 
   if (status === "fulfilled" && films.length === 0) {
     return <div>Film not found</div>;

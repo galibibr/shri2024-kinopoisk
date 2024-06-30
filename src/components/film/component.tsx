@@ -19,12 +19,12 @@ export const Film: ({ film, user }: { film: FilmT; user: boolean }) => JSX.Eleme
 
   return (
     <div className={classNames(styles.container)}>
-      <Link to={`${film.id}`}>
+      <Link to={`film/${film.id}`}>
         <img className={classNames(styles.poster)} src={film.poster} alt={film.title} />
       </Link>
       <div className={classNames(styles.right_box)}>
         <div className={classNames(styles.main)}>
-          <Link to={`${film.id}`}>
+          <Link to={`film/${film.id}`}>
             <p className={classNames(styles.title)}>{film.title}</p>
           </Link>
           <div className={classNames(styles.grid)}>

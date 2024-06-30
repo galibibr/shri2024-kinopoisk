@@ -5,7 +5,7 @@ import { Layout } from "./components/layout/component";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "films/",
     element: <Layout />,
     children: [
       {
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
         errorElement: <h1>Server dosn't response!</h1>,
       },
       {
-        path: ":id",
+        path: "film/:id",
         element: <FilmPage />,
       },
     ],
