@@ -1,19 +1,23 @@
 import classNames from "classnames";
-import { setTitle } from "../../features/appSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import styles from "./styles.module.css";
 import searchIcon from "../../icons/Icon.png";
 import { useDebounce } from "../../hooks/use-debounce";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 export const Search = () => {
-  const dispatch = useAppDispatch();
-  const title: string = useAppSelector((state) => state.app.title);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const title = searchParams.get("title") || "";
+
   const [titleNow, setTitleNow] = useState(title);
   const debounceSearch = useDebounce(titleNow);
 
   useEffect(() => {
-    dispatch(setTitle(debounceSearch));
+    setSearchParams((prev) => {
+      prev.set("title", titleNow);
+      return prev;
+    });
   }, [debounceSearch]);
 
   return (

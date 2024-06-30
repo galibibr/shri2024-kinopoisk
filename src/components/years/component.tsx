@@ -1,9 +1,8 @@
 import classNames from "classnames";
-import { setRealiseYear } from "../../features/appSlice";
-import { useAppDispatch } from "../../hooks/hooks";
 import styles from "./styles.module.css";
 import { useState } from "react";
 import icon from "../../icons/sicon.png";
+import { useSearchParams } from "react-router-dom";
 
 export const Years = () => {
   const YEARS: { [key: string]: string } = {
@@ -16,14 +15,22 @@ export const Years = () => {
     "1950-1989": "1950-1989",
   };
 
-  const [year, setYear] = useState<string>("Выберите год");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [year, setYear] = useState<string>(
+    searchParams.get("release_year") === "0"
+      ? "Выберите год"
+      : searchParams.get("release_year") || "Выберите год"
+  );
   const [yearSelect, setYearSelect] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
 
   const handleSelect = (key: string) => {
     setYearSelect(false);
     setYear(YEARS[key]);
-    dispatch(setRealiseYear(key));
+    setSearchParams((prev) => {
+      prev.set("release_year", key);
+      return prev;
+    });
   };
 
   return (
@@ -59,22 +66,6 @@ export const Years = () => {
           })}
         </div>
       )}
-      {/* <select
-        className={classNames(styles.select)}
-        name="years"
-        id="years"
-        onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-          dispatch(setRealiseYear(e.target.value))
-        }>
-        <option disabled selected>
-          Выберите год
-        </option>
-        {Object.keys(YEARS).map((key: string) => (
-          <option className={classNames(styles.option)} key={key} value={key}>
-            {YEARS[key]}
-          </option>
-        ))}
-      </select> */}
     </div>
   );
 };

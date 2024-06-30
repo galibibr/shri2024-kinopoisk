@@ -29,7 +29,7 @@ export const Header = () => {
 
   return (
     <header className={classNames(styles.header)}>
-      <Link to="/films" className={classNames(styles.logo)}>
+      <Link to="/" className={classNames(styles.logo)}>
         Фильмопоиск
       </Link>
       <div className={classNames(styles.auth_box)}>

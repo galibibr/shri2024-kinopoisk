@@ -5,27 +5,35 @@ import { Pagination } from "../pagination/component";
 import { Film } from "../film/component";
 import { FilmT } from "../../types/types";
 import { Loading } from "../loading/component";
+import { useSearchParams } from "react-router-dom";
 
 export const Films = () => {
   const dispatch = useAppDispatch();
   const { search_result: films, total_pages }: { search_result: FilmT[]; total_pages: number } =
     useAppSelector((state) => state.app.data);
-  const title: string = useAppSelector((state) => state.app.title);
-  const page: number = useAppSelector((state) => state.app.page);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const title = searchParams.get("title") || "";
+  const page = Number(searchParams.get("page")) || 1;
+  const release_year = searchParams.get("release_year") || "0";
+  const genre = searchParams.get("genre") || "0";
+
   const status: string | null = useAppSelector((state) => state.app.status);
-  const release_year: string = useAppSelector((state) => state.app.release_year);
-  const genre: string = useAppSelector((state) => state.app.genre);
   const user = useAppSelector((state) => state.app.user);
 
-  const query =
-    (title ? `title=${title}` : "") +
-    (page > 1 ? `${title ? "&" : ""}page=${page}` : "") +
-    (release_year !== "0" ? `&release_year=${release_year}` : "") +
-    (genre !== "0" ? `&genre=${genre}` : "");
+  // const release_year: string = useAppSelector((state) => state.app.release_year);
+  // const genre: string = useAppSelector((state) => state.app.genre);
+
+  const titleQuery = title ? `title=${title}` : "";
+  const pageQuery = page > 0 ? `${title ? "&" : ""}page=${page}` : "";
+  const releaseYearQuery = release_year !== "0" ? `&release_year=${release_year}` : "";
+  const genreQuery = genre !== "0" ? `&genre=${genre}` : "";
+
+  const query = titleQuery + pageQuery + releaseYearQuery + genreQuery;
 
   useEffect(() => {
     dispatch(getFilmBySearch(query));
-  }, [page, release_year, genre, title]);
+  }, [query]);
 
   if (status === "fulfilled" && films.length === 0) {
     return <div>Film not found</div>;
@@ -46,8 +54,18 @@ export const Films = () => {
           <Pagination
             page={page}
             total_pages={total_pages}
-            previous={() => dispatch(setPage(page - 1))}
-            next={() => dispatch(setPage(page + 1))}
+            previous={() => {
+              setSearchParams((prev) => {
+                prev.set("page", String(page - 1));
+                return prev;
+              });
+            }}
+            next={() => {
+              setSearchParams((prev) => {
+                prev.set("page", String(page + 1));
+                return prev;
+              });
+            }}
           />
         </div>
       ) : (

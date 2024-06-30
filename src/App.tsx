@@ -5,7 +5,7 @@ import { Layout } from "./components/layout/component";
 
 const router = createBrowserRouter([
   {
-    path: "films/",
+    path: "/",
     element: <Layout />,
     children: [
       {

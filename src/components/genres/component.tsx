@@ -1,9 +1,8 @@
 import classNames from "classnames";
-import { useAppDispatch } from "../../hooks/hooks";
 import { useState } from "react";
 import icon from "../../icons/sicon.png";
-import { setGenre } from "../../features/appSlice";
 import styles from "./styles.module.css";
+import { useSearchParams } from "react-router-dom";
 
 export const Genres = () => {
   type Genres = { [key: string]: string };
@@ -22,15 +21,22 @@ export const Genres = () => {
     musical: "Мьюзикл",
     war: "Военный",
   };
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [genre, setGenreS] = useState<string>("Выберите жанр");
+  const [genre, setGenreS] = useState<string>(
+    searchParams.get("genre") === "0"
+      ? "Выберите жанр"
+      : searchParams.get("genre") || "Выберите жанр"
+  );
   const [genreSelect, setGenreSelect] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
 
   const handleSelect = (key: string) => {
     setGenreSelect(false);
     setGenreS(GENRES[key]);
-    dispatch(setGenre(key));
+    setSearchParams((prev) => {
+      prev.set("genre", key);
+      return prev;
+    });
   };
 
   return (
@@ -66,16 +72,6 @@ export const Genres = () => {
           })}
         </div>
       )}
-      {/* <select
-        name="genres"
-        id="genres"
-        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => dispatch(setGenre(e.target.value))}>
-        {Object.keys(GENRES).map((key: string) => (
-          <option key={key} value={key}>
-            {GENRES[key]}
-          </option>
-        ))}
-      </select> */}
     </div>
   );
 };
