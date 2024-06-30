@@ -29,6 +29,7 @@ export const Years = () => {
     setYear(YEARS[key]);
     setSearchParams((prev) => {
       prev.set("release_year", key);
+      prev.set("page", "1");
       return prev;
     });
   };

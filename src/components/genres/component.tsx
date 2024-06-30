@@ -35,6 +35,7 @@ export const Genres = () => {
     setGenreS(GENRES[key]);
     setSearchParams((prev) => {
       prev.set("genre", key);
+      prev.set("page", "1");
       return prev;
     });
   };

@@ -97,11 +97,7 @@ type Data = {
    total_pages: number
 }
 type AppT = {
-   release_year: string,
    loginModal: boolean
-   genre: string,
-   page: number
-   title: string
    status: string | null
    statusGetById: string | null
    loginStatus: string | null
@@ -114,11 +110,7 @@ type AppT = {
 }
 
 const initialState: AppT = {
-   release_year: '0',
    loginModal: false,
-   genre: '0',
-   page: 1,
-   title: '',
    status: null,
    statusGetById: null,
    loginStatus: null,
@@ -134,18 +126,6 @@ export const appSlice = createSlice({
    name: 'app',
    initialState,
    reducers: {
-      setTitle: (state: AppT, action: PayloadAction<string>) => {
-         state.title = action.payload
-      },
-      setPage: (state: AppT, action: PayloadAction<number>) => {
-         state.page = action.payload
-      },
-      setRealiseYear: (state: AppT, action: PayloadAction<string>) => {
-         state.release_year = action.payload
-      },
-      setGenre: (state: AppT, action: PayloadAction<string>) => {
-         state.genre = action.payload
-      },
       setLoginModal: (state: AppT, action: PayloadAction<boolean>) => {
          state.loginModal = action.payload
       },
@@ -205,7 +185,7 @@ export const appSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setTitle, setUser, setLoginStatus, setUsername, setPassword, setLoginModal, setPage, setRealiseYear, setGenre } = appSlice.actions
+export const { setUser, setLoginStatus, setUsername, setPassword, setLoginModal } = appSlice.actions
 
 // export const selectApp = (state: RootState) => state.app.value
 

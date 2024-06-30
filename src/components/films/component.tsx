@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { getFilmBySearch, setPage } from "../../features/appSlice";
+import { getFilmBySearch } from "../../features/appSlice";
 import { Pagination } from "../pagination/component";
 import { Film } from "../film/component";
 import { FilmT } from "../../types/types";
@@ -20,9 +20,6 @@ export const Films = () => {
 
   const status: string | null = useAppSelector((state) => state.app.status);
   const user = useAppSelector((state) => state.app.user);
-
-  // const release_year: string = useAppSelector((state) => state.app.release_year);
-  // const genre: string = useAppSelector((state) => state.app.genre);
 
   const titleQuery = title ? `title=${title}` : "";
   const pageQuery = page > 0 ? `${title ? "&" : ""}page=${page}` : "";
