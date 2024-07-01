@@ -14,7 +14,7 @@ const router = createBrowserRouter([
         errorElement: <h1>Server dosn't response!</h1>,
       },
       {
-        path: "film/:id",
+        path: "movie/:id",
         element: <FilmPage />,
       },
     ],
