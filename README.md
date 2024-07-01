@@ -2,13 +2,7 @@
 
 Начните с клонирования этого репозитория на локальном компьютере:
 
-HTTPS:
-
-`$ git clone https://github.com/galibibr/solution-spa-and-next.git`
-
-SSH:
-
-`$ git clone git@github.com:galibibr/solution-spa-and-next.git`
+`$ git clone `
 
 Чтобы установить и настроить библиотеку, запустите:
 
@@ -23,3 +17,5 @@ SSH:
 ## Обслуживание приложения
 
 `npm run dev`
+
+## Не успел мигрировать приложение на Next.js :(
